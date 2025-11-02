@@ -37,16 +37,17 @@ type TReport = {
 };
 
 const generateSalesReport = sales?.reduce((report: TReport, curr: TSales) => {
-  if (!report[curr.category]) {
-    report[curr.category] = {
+  const { category, price, quantity } = curr;
+
+  if (!report[category]) {
+    report[category] = {
       totalRevenue: 0,
       itemCount: 0,
     };
   }
-  if (report[curr.category]) {
-    report[curr.category]!.totalRevenue += curr?.price * curr?.quantity;
-    report[curr.category]!.itemCount += curr?.quantity;
-  }
+
+  report[category]!.totalRevenue += price * quantity;
+  report[category]!.itemCount += quantity;
 
   return report;
 }, {});
