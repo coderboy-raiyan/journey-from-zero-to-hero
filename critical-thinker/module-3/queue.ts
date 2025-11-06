@@ -7,7 +7,7 @@ class Node<T> {
   }
 }
 
-class SinglyLinkedList<T> {
+class queue<T> {
   tail: Node<T> | null;
   head: Node<T> | null;
   length: number;
@@ -17,7 +17,7 @@ class SinglyLinkedList<T> {
     this.length = 0;
   }
 
-  append(val: T) {
+  enqueue(val: T) {
     this.length++;
     if (this.head === null && this.tail === null) {
       this.head = new Node(val);
@@ -29,7 +29,7 @@ class SinglyLinkedList<T> {
     this.tail = newNode;
   }
 
-  prepend(val: T) {
+  dequeue(val: T) {
     this.length++;
     if (this.head === null && this.tail === null) {
       this.head = new Node(val);
@@ -49,11 +49,11 @@ class SinglyLinkedList<T> {
     }
 
     if (index === 0) {
-      this.prepend(val);
+      this.enqueue(val);
       return;
     }
     if (index === this.length) {
-      this.append(val);
+      this.dequeue(val);
       return;
     }
 
@@ -62,6 +62,9 @@ class SinglyLinkedList<T> {
     newNode.next = prevNode!.next;
     prevNode!.next = newNode;
     this.length++;
+  }
+  peek() {
+    return this.head?.val || "Empty";
   }
   removeHead() {
     if (this.head === null) return;
@@ -134,8 +137,8 @@ class SinglyLinkedList<T> {
   }
 }
 
-const list = new SinglyLinkedList();
-list.remove(list.length);
+const list = new queue();
+list.peek();
 list.print();
 
 console.log(`size : ${list.length}`);

@@ -76,8 +76,8 @@ class SinglyLinkedList<T> {
     this.length--;
   }
 
-  remove(index: number) {
-    if (index || index > this.length) {
+  remove(index?: number) {
+    if (index && index > this.length) {
       console.log("Invalid position ", index);
       return;
     }
@@ -135,6 +135,11 @@ class SinglyLinkedList<T> {
 }
 
 const list = new SinglyLinkedList();
+list.append(10);
+list.append(20);
+list.append(30);
+list.append(40);
+list.insert(889, 0);
 list.remove(list.length);
 list.print();
 
