@@ -10,7 +10,7 @@ for (let i = 0; i <= USER_COUNT; i++) {
   usersB.push(createUser(i + 2000));
 }
 
-// Users from 2001 to 5000 common users
+// Users from 2000 to 5001 common users
 //  Used Set Data structure to reduce time to O(n)
 type TUsers = ReturnType<typeof createUser>;
 
