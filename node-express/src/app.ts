@@ -51,16 +51,43 @@ app.get('/api/users', async (req: Request, res: Response) => {
 app.patch('/api/users/:id', async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const result = await pool.query(`SELECT * FROM users  WHERE id = $1`, [id]);
+        const { name, email } = req.body;
+        const result = await pool.query(
+            `UPDATE users SET name=$1, email=$2 WHERE id=$3 RETURNING *`,
+            [name, email, id]
+        );
         if (!result.rows.length) {
             return res.status(404).json({
                 success: false,
                 message: 'User not found',
             });
         }
+
         return res.status(201).json({
             success: true,
             message: 'User created successfully',
+            data: result.rows[0],
+        });
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+});
+
+app.delete('/api/users/:id', async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        const result = await pool.query(`DELETE FROM users WHERE id=$1 RETURNING *`, [id]);
+        if (!result.rows.length) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found',
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'User deleted successfully',
             data: result.rows[0],
         });
     } catch (error) {
